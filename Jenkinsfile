@@ -1,9 +1,9 @@
 pipeline{
     agent any
     stages{
-        stage("Welcome"){
+        stage("Git SCM"){
             steps{
-                git 'https://github.com/dgp999/Janarirepo.git'
+                git 'https://github.com/dgp999/declarativepipe.git'
             }
         }
         stage("Maven Build"){
@@ -13,17 +13,13 @@ pipeline{
             }
         }
         stage("Deploy"){
-            sshagent(['Newone']){
+            steps{
+			    sshagent(['Newone']){
                 sh """
-                scp -o StrictHostKeyChecking=no target/myweb.war ec2-user@172.31.6.240:/opt/tomcat9/webapps/'
-                ssh ec2-user@172.31.6.240 /opt/tomcat9/bin ./shutdown.sh
-                ssh ec2-user@172.31.6.240 /opt/tomcat9/bin ./startup.sh
-                
+                    scp -o StrictHostKeyChecking=no target/myweb.war ec2-user@172.31.6.240:/opt/tomcat9/webapps/'
+                    ssh ec2-user@172.31.6.240 /opt/tomcat9/bin ./shutdown.sh
+                    ssh ec2-user@172.31.6.240 /opt/tomcat9/bin ./startup.sh
                 """
-
-                
-    
-
+            }
         }
-    }
-}
+
