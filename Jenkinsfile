@@ -1,9 +1,9 @@
 pipeline{
     agent any
     stages{
-        stage("Welcome"){
+        stage("Git SCM"){
             steps{
-                git 'https://github.com/dgp999/Janarirepo.git'
+                git 'https://github.com/dgp999/declarativepipe.git'
             }
         }
         stage("Maven Build"){
